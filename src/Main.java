@@ -2,6 +2,8 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.HashSet;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -10,9 +12,11 @@ public class Main {
     }
 
     public void inicio() {
-        System.out.println("🎯 Bienvenido al juego 'Guess the Movie'!");
         ArrayList<String> movies = loadMovies();
         System.out.println("Películas cargadas: " + movies.size());
+        System.out.println("🎯 Bienvenido al juego 'Guess the Movie'!");
+
+
 
     }
     public static ArrayList<String> loadMovies() {
@@ -50,4 +54,34 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         return scanner.nextInt();
     }
+    public static String guessLetter(String title, String hiddenTitle, char letter, HashSet<Character> guessedLetters) {
+        if (guessedLetters.contains(Character.toUpperCase(letter))) {
+            System.out.println("Ya has adivinado esa letra. Intenta otra.");
+            return hiddenTitle;
+        }
+        guessedLetters.add(Character.toUpperCase(letter));
+
+        StringBuilder updatedTitle = new StringBuilder(hiddenTitle);
+        boolean found = false;
+        for (int i = 0; i < title.length(); i++) {
+            if (Character.toUpperCase(title.charAt(i)) == Character.toUpperCase(letter)) {
+                updatedTitle.setCharAt(i, title.charAt(i));
+                found = true;
+            }
+        }
+
+        if (!found) {
+            System.out.println("La letra no está en el título.");
+        } else {
+            System.out.println("¡Correcto!");
+        }
+
+        return updatedTitle.toString();
+    }
+    public static boolean guessTitle(String title, String guessedTitle) {
+        return title.equalsIgnoreCase(guessedTitle);
+    }
+
+
+
 }
