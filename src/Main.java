@@ -14,8 +14,67 @@ public class Main {
     public void inicio() {
         ArrayList<String> movies = loadMovies();
         System.out.println("Películas cargadas: " + movies.size());
-        System.out.println("🎯 Bienvenido al juego 'Guess the Movie'!");
+        System.out.println("\n🎯 Bienvenido/a al juego 'Guess the Movie'!");
+        int attempts = 10;
+        int points = 0;
+        HashSet<Character> guessedLetters = new HashSet<>();
+        String selectedMovie = getRandomMovie(movies);
+        String hiddenMovie = hideMovieTitle(selectedMovie);
 
+        while (attempts > 0 && !hiddenMovie.equals(selectedMovie)) {
+            System.out.println("\nEstas adivinando: " + hiddenMovie);
+            System.out.println("Turnos restantes: " + attempts);
+            System.out.println("Puntos: " + points);
+
+            int option = showMenu();
+
+            if (option == 1) {
+                System.out.print("Introduce una letra: ");
+                char letter = new Scanner(System.in).next().charAt(0);
+
+                if (!Character.isLetter(letter)) {
+                    System.out.println("Debes introducir una letra válida.");
+                    continue;
+                }
+
+                String updatedHiddenMovie = guessLetter(selectedMovie, hiddenMovie, letter, guessedLetters);
+                if (!updatedHiddenMovie.equals(hiddenMovie)) {
+                    points += 10;
+                } else if (!guessedLetters.contains(Character.toUpperCase(letter))) {
+                    points -= 10;
+                    attempts--;
+                }
+                hiddenMovie = updatedHiddenMovie;
+
+            } else if (option == 2) {
+                System.out.print("Introduce el título completo: ");
+                String guessedTitle = new Scanner(System.in).nextLine();
+
+                if (guessTitle(selectedMovie, guessedTitle)) {
+                    points += 20;
+                    hiddenMovie = selectedMovie;
+                } else {
+                    points -= 20;
+                    attempts = 0;
+                }
+
+            } else if (option == 3) {
+                System.out.println("Saliendo del juego...");
+                attempts = 0;
+                break;
+            } else {
+                System.out.println("Opción no válida. Inténtalo de nuevo.");
+            }
+        }
+
+        System.out.println("\nEl título era: " + selectedMovie);
+        System.out.println("Puntuación final: " + points);
+
+        if (hiddenMovie.equals(selectedMovie)) {
+            System.out.println("¡Felicidades, has ganado!");
+        } else {
+            System.out.println("Has perdido. Inténtalo de nuevo.");
+        }
 
 
     }
