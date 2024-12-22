@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Main {
     public static void main(String[] args) {
@@ -23,5 +24,9 @@ public class Main {
             System.out.println("Error leyendo el archivo de películas: " + e.getMessage());
         }
         return movies;
+    }
+    public static String getRandomMovie(ArrayList<String> movies) {
+        Random random = new Random();
+        return movies.get(random.nextInt(movies.size()));
     }
 }
