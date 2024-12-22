@@ -1,6 +1,7 @@
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
@@ -40,5 +41,13 @@ public class Main {
             }
         }
         return hidden.toString();
+    }
+    public static int showMenu() {
+        System.out.println("\nElige una opción:");
+        System.out.println("[1] Adivinar una letra");
+        System.out.println("[2] Adivinar el título de la película");
+        System.out.println("[3] Salir");
+        Scanner scanner = new Scanner(System.in);
+        return scanner.nextInt();
     }
 }
