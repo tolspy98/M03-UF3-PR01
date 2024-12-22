@@ -12,6 +12,7 @@ public class Main {
         System.out.println("🎯 Bienvenido al juego 'Guess the Movie'!");
         ArrayList<String> movies = loadMovies();
         System.out.println("Películas cargadas: " + movies.size());
+
     }
     public static ArrayList<String> loadMovies() {
         ArrayList<String> movies = new ArrayList<>();
@@ -28,5 +29,16 @@ public class Main {
     public static String getRandomMovie(ArrayList<String> movies) {
         Random random = new Random();
         return movies.get(random.nextInt(movies.size()));
+    }
+    public static String hideMovieTitle(String title) {
+        StringBuilder hidden = new StringBuilder();
+        for (char c : title.toCharArray()) {
+            if (Character.isLetter(c)) {
+                hidden.append('*');
+            } else {
+                hidden.append(c);
+            }
+        }
+        return hidden.toString();
     }
 }
